@@ -4,22 +4,27 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.function.Function;
+
 import java.util.function.Supplier;
 
-public class TableInsert {
+public class Table {
 	
 	
-	public static void load(String fullPath, Connection con, String tableName, Boolean 
-			batchMode, String fieldList,  Function<String,String> ...fList ) 
+	public static void load(String fullPath, Connection con, String tableName, String fieldList, Function<String,String> ...fList ) 
 					throws Exception {
 
 	String insertSql1  = "";
 	int loaded = 0;
-	Statement stmt = null;
 	try {
 		ArrayList<ArrayList<String>> rowList = (ArrayList<ArrayList<String>>) CSVtoArrayList
 				.CSVToArrayList(fullPath);
-		stmt = con.createStatement();
+		Statement stmt = con.createStatement();
+		// get rid of old data; can't have duplicate primary key failure
+		String truncateTableSql = "delete from " + tableName + " ";	
+		System.out.println(truncateTableSql);
+		int resultCode = stmt.executeUpdate(truncateTableSql);
+		System.out.println(" inserting " + (rowList.size() - 1) + " rows into " + tableName);
+		
 		
 		// skip the header row
 		for (int i = 1, j=0; i < rowList.size(); i++,j=0) { // skip first row
@@ -33,12 +38,8 @@ public class TableInsert {
 		   insertSql2.append( " )" );
 		   String finalSql = insertSql2.toString();
 			try {
-				if (batchMode) {
-					stmt.addBatch(finalSql);
-				}
-				else {
-					int resultCode2 = stmt.executeUpdate(finalSql);
-				}
+				//System.out.println(finalSql);
+				int resultCode2 = stmt.executeUpdate(finalSql);
 				loaded++;
 			}
 			catch (Exception ex) {
@@ -48,17 +49,8 @@ public class TableInsert {
 			if (i%1000==0) {
 				System.out.print((i/1000 ) + "k,");
 				if (i%10000==0) System.out.println();
-				
-				try {
-					if (batchMode) {
-						stmt.executeBatch();
-					}
-					con.commit();
-				}
-				catch (Exception exp  ) {
-					exp.printStackTrace();
-				}
 			}
+
 		}
 		con.commit();
 	} catch (Exception e) {
@@ -66,15 +58,8 @@ public class TableInsert {
 	}
 	finally {
 		System.out.println("  loaded " + loaded + " rows");
-		try {
-			if (batchMode) {
-				stmt.executeBatch();
-			}
-			con.commit();
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 }
+	
+
 }

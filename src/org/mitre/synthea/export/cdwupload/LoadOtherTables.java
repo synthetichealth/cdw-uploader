@@ -6,14 +6,13 @@ import java.util.function.Function;
 public class LoadOtherTables {
 	
 
-	
+	// this calls tableBatch for each table; tableBatch first deletes all the records from the table then loads the table.
 		
 	public static void load(Connection cn, String dir, Boolean batchMode) throws Exception {	
 			
 		if (batchMode) {
 			cn.setAutoCommit(false);
 		}
-		
 		
 		TableBatch.load(dir + "allergicreaction.csv", cn, "Allergy.AllergicReaction", batchMode,
 				"(AllergicReactionSID,  AllergySID,  AllergyIEN,  Sta3n,   ReactionSID)",
@@ -42,7 +41,8 @@ public class LoadOtherTables {
 						+ ",  CheckOutDateTime) " ,
 				F.s, F.s, F.s, F.d, F.d, 
 				F.s, F.s, F.s, F.s, F.s,
-				F.s, F.d, F.s, F.s, F.d, 
+				//F.s, F.d, F.s, F.s, F.d, 
+				F.s, F.d, F.m, F.s, F.d, 
 				F.d);
 		
 		TableBatch.load(dir + "consult.csv", cn, "Con.Consult",  batchMode,

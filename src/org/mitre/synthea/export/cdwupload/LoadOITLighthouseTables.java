@@ -14,7 +14,7 @@ public class LoadOITLighthouseTables {
 		cn.setAutoCommit(false);
 	}
 	
-	TableDelete.delete(cn, "App.Lookup_Patient");
+	TableDelete.delete(cn, "App.Lookup_Patient", " where patientSID > 1 ");
 	TableInsert.load(dir + "lookuppatient.csv", cn, "App.Lookup_Patient",  batchMode,
 			" ( PatientSID, Sta3n, PatientIEN, PatientICN, PatientFullICN,"
 			+ "  PatientName,  TestPatient ) ",

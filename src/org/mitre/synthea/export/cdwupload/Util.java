@@ -1,5 +1,7 @@
 package org.mitre.synthea.export.cdwupload;
 
+import java.util.function.Function;
+
 public class Util {
 	public final static String COMMA_S = "\",\"";
 	public final static String COMMA = ",";
@@ -81,6 +83,16 @@ public class Util {
 			return("20235");
 		}
 	}
+	
+	
+	public static String  truncateTo50AndQuote(String inStr) {
+		if (inStr.length() > 50 ) {return( "'" + inStr.substring(0,50) + "'" );}
+		else { return( "'" + inStr + "'" ); }	
+	}
+	
+
+	
+
 	
 }
 

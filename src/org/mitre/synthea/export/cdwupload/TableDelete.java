@@ -5,14 +5,14 @@ import java.sql.Statement;
 
 public class TableDelete {
 
-	public static void delete(Connection con, String tableName) throws Exception {
+	public static void delete(Connection con, String tableName, String whereClause) throws Exception {
 		Statement stmt = null;
 		
 		try {
-			con.setAutoCommit(true);
+			//con.setAutoCommit(true);
 			stmt = con.createStatement();
 			// get rid of old data; can't have duplicate primary key failure
-			String truncateTableSql = "delete from " + tableName + " ";
+			String truncateTableSql = "delete from " + tableName + " " + whereClause ;
 			System.out.println(truncateTableSql);
 			int resultCode = stmt.executeUpdate(truncateTableSql);
 			con.commit();
@@ -21,3 +21,4 @@ public class TableDelete {
 		}
 	}
 }
+

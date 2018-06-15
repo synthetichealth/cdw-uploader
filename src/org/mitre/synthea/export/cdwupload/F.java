@@ -20,4 +20,10 @@ public class F {
 	
 	public static Function<String, String>  m = (String inStr) -> Util.maxDecimal_9_4(inStr);
 	
+	
+	//TODO - getting currying to work so you can pass a maxlen parameter and still have a varargs list of Function
+	// that takes one parameter.
+	
+	public static Function<String, String> g = (String inStr) -> Util.truncateTo50AndQuote(inStr);
+	
 }
