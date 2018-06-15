@@ -27,3 +27,4 @@ public class F {
 	public static Function<String, String> g = (String inStr) -> Util.truncateTo50AndQuote(inStr);
 	
 }
+

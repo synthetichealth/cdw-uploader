@@ -39,13 +39,13 @@ public class LoadMultipleRuns {
 	}
 
 	public static void main( String args[]) {
-		String propFilePath = "/Users/garygryan/db.properties";
+		String propFilePath = Util.propFilePath;
 		Properties dbProps = new Properties();
 		Boolean AWS = false;
 		Connection con = null;
 		long starttime = System.currentTimeMillis();
-		//String baseDir = "/Users/ggryan/Downloads/2018-06-14/synthea-cdw_exporter/run3/";
-		String baseDir = "";  //"/Users/ggryan/Downloads/2018-06-14c/synthea-cdw_exporter/run3/";
+
+		String baseDir = "";  
 		
 		String dbUrl = "";
 		Properties conProps = new Properties();

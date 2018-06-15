@@ -10,14 +10,10 @@ import java.util.Properties;
 public class UploadCDW {
 	
 	public static void main(String args[]) {
-		String propFilePath = "/Users/ggryan/db.properties";
+		String propFilePath = Util.propFilePath;
 		Properties dbProps = new Properties();
 		Connection con = null;
-		String baseDir = "/Users/ggryan/Downloads/synthea-cdw_exporter/output/cdw/";
-		
-		baseDir = "/Users/garygryan/Downloads/2018-06-14/synthea-cdw_exporter/output/cdw/";
-		baseDir = "/Users/garygryan/Downloads/2018-06-14/run3/output.nh/";
-		baseDir = "/Users/ggryan/Downloads/2018-06-14/synthea-cdw_exporter/run3/output.ct/";
+		String baseDir = "";
 		Boolean AWS = false;
 		String dbUrl = "";
 		Properties conProps = new Properties();
@@ -27,6 +23,8 @@ public class UploadCDW {
 			dbProps.load(new FileInputStream(propFilePath));
 			AWS =Boolean.parseBoolean((String) dbProps.get("AWS"));
 			dbProps.getProperty("dbUrl");
+			baseDir = (String) dbProps.get("basedirsingle");
+			
 			if (AWS) {
 				dbUrl = (String) dbProps.get("awsdburl");
 				conProps.put("user", dbProps.get("awsuser"));
@@ -43,9 +41,6 @@ public class UploadCDW {
 			DeleteDimTables.delete(con);
 			InsertDimTables.load(con, baseDir, true);
 			System.out.println(dbUrl);
-			
-			//LoadDim_PharmacyOrderableItem.load(con, baseDir, true );  // need to fix this
-			
 			DeleteOtherTables.delete(con);
 			InsertOtherTables.load(con, baseDir, true);
 			
@@ -64,9 +59,7 @@ public class UploadCDW {
 			}
 		}
 		
-		// load tables in the OIT_Lightouse DB
-		//conProps.put("database", "");
-
+		// load tables in the OIT_Lighthouse DB
 		conProps.put("database", dbProps.getProperty("oitlighthousedatabase"));
 		try {
 			con = DriverManager.getConnection(dbUrl, conProps);
@@ -81,12 +74,11 @@ public class UploadCDW {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-		}
-		
+		}	
 		long stoptime = System.currentTimeMillis();
 		System.out.println(" finished in " + (double) (stoptime -starttime)/(60.000 * 1000.0) + "min");
 	}
-
 }
+
 
 

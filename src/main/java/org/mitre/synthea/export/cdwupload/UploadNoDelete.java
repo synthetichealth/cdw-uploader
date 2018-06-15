@@ -7,7 +7,7 @@ import java.util.Properties;
 public class UploadNoDelete {
 	
 public static void load(String baseDir, Boolean AWS) {
-		String propFilePath = "/Users/garygryan/db.properties";
+		String propFilePath = "/Users/ggryan/db.properties";
 		Properties dbProps = new Properties();
 		Connection con = null;
 		long starttime = System.currentTimeMillis();

@@ -3,6 +3,8 @@ package org.mitre.synthea.export.cdwupload;
 import java.util.function.Function;
 
 public class Util {
+	public static final String propFilePath = "/Users/ggryan/db.properties";
+	
 	public final static String COMMA_S = "\",\"";
 	public final static String COMMA = ",";
 
@@ -95,4 +97,5 @@ public class Util {
 
 	
 }
+
 
