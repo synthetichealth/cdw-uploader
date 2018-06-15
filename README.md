@@ -1,5 +1,12 @@
 # cdw-uploader
 
+This code is designed to upload synthetic data produced by Synthea into a subset of SQLServer database 
+tables from the Veteran's Adminstration (VA) Corporate Data Warehouse (CDW).  The data is exported from
+Synthea as comma separated values (CSV) files with column headers.   
+
+The code uses a properties file (dn.properties) to supply parameters for the database connection and
+location of input files.  
+
 # License
 
 Copyright 2018 The MITRE Corporation
