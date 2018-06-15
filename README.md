@@ -4,7 +4,7 @@ This code is designed to upload synthetic data produced by Synthea into a subset
 tables from the Veteran's Adminstration (VA) Corporate Data Warehouse (CDW).  The data is exported from
 Synthea as comma separated values (CSV) files with column headers.   
 
-The code uses a properties file (dn.properties) to supply parameters for the database connection and
+The code uses a properties file (db.properties) to supply parameters for the database connection and
 location of input files.  
 
 # License
