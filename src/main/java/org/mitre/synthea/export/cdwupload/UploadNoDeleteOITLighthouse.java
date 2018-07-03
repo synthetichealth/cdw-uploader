@@ -8,7 +8,7 @@ import java.util.Properties;
 public class UploadNoDeleteOITLighthouse {
 	
 public static void load(String baseDir, Boolean AWS) {
-		String propFilePath = "/Users/ggryan/db.properties";
+		String propFilePath = "/Users/garygryan/db.properties";
 		Properties dbProps = new Properties();
 		Connection con = null;
 		long starttime = System.currentTimeMillis();
@@ -49,4 +49,3 @@ public static void load(String baseDir, Boolean AWS) {
 		System.out.println(" finished in " + (double) (stoptime -starttime)/(60.000 * 1000.0) + "min");
 	}
 }
-

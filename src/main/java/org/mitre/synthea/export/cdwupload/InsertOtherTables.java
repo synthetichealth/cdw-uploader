@@ -18,14 +18,14 @@ public class InsertOtherTables {
 		TableInsert.load(dir + "allergicreaction.csv", cn, "Allergy.AllergicReaction", batchMode,
 				"(AllergicReactionSID,  AllergySID,  AllergyIEN,  Sta3n,   ReactionSID)",
 				F.s, F.s, F.s, F.s, F.s);
-		
+
 		TableInsert.load(dir + "allergy.csv", cn, "Allergy.Allergy",  batchMode,
 				" ( AllergySID,  AllergyIEN,  Sta3n,  PatientSID,  AllergyType"
 				+ ",  AllergicReactant,  LocalDrugSID,  DrugNameWithoutDoseSID,  DrugClassSID,  ReactantSID" 
 						+ ",  DrugIngredientSID,  OriginationDateTime,  OriginatingStaffSID,  ObservedHistorical,  Mechanism"
 						+ ",  VerifiedFlag,  VerificationDateTime,  VerifyingStaffSID,  EnteredInErrorFlag ) " ,
 				F.s, F.s, F.s, F.s, F.s, 
-				F.s, F.s, F.s, F.s, F.s,
+				F.s, F.s, F.s, F.nl, F.s,
 				F.s, F.d, F.s, F.s, F.s, 
 				F.d, F.s, F.s, F.s);
 		
@@ -86,7 +86,7 @@ public class InsertOtherTables {
 				+ "  ResolvedDateTime,  SNOMEDCTConceptCode)",
 				F.s, F.s, F.s, F.s, F.s, 
 				F.s, F.d, F.d, F.s, F.s,
-				F.s, F.s  );
+				F.d, F.s  );
 				
 		TableInsert.load(dir + "vdiagnosis.csv", cn, "Outpat.VDiagnosis",  batchMode,
 				" (VDiagnosisSID,  Sta3n,  ICD9SID,  ICD10SID,  PatientSID"
@@ -141,5 +141,3 @@ public class InsertOtherTables {
 				" ( StaffSID , StaffName ) "  , F.s, F.s  );		
 	}
 }
-
-

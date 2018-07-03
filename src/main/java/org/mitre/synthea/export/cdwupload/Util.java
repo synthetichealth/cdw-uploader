@@ -3,10 +3,9 @@ package org.mitre.synthea.export.cdwupload;
 import java.util.function.Function;
 
 public class Util {
-	public static final String propFilePath = "/Users/ggryan/db.properties";
-	
 	public final static String COMMA_S = "\",\"";
 	public final static String COMMA = ",";
+	public static final String propFilePath = "/Users/garygryan/db.properties";
 
 	// single quote a String; deal with edge cases of nulls
 	public static String singleQuoteString(String inStr) {
@@ -19,6 +18,20 @@ public class Util {
 			return ("'" + inStr + "'");
 		}
 	}
+	
+	// single quote a String; deal with edge cases of nulls
+	public static String singleQuoteStringOrNull(String inStr) {
+		if (inStr == null || inStr.length() == 0 || inStr.equals("''")) {
+			return (null);
+		}
+		if (inStr.contains("'")) {
+			return ("'" + inStr.replaceAll("'", "''") + "'");
+		} else {
+			return ("'" + inStr + "'");
+		}
+	}
+	
+	
 	
 	// single quote a String; deal with edge cases of nulls
 	public static String singleQuoteStringAndTruncate(String inStr, int maxLen) {
@@ -35,6 +48,12 @@ public class Util {
 			return ("'" + inStr + "'");
 		}
 	}
+	
+	//same as above, but with parameters reversed for currying
+	public static String singleQuoteStringAndTruncate(int maxlen, String inStr) {
+		return(singleQuoteStringAndTruncate( inStr,  maxlen));
+	}
+	
 
 	// single quote an string containing an int; deal with nulls
 	public static String singleQuoteMissingInt(String inStr) {
@@ -97,5 +116,4 @@ public class Util {
 
 	
 }
-
 

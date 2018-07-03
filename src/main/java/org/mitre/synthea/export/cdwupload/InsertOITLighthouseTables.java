@@ -4,9 +4,7 @@ import java.sql.Connection;
 
 public class InsertOITLighthouseTables {
 	
-	
-	
-	
+
 	public static void load(Connection cn, String dir, Boolean  batchMode ) throws Exception{	
 		// pass a function to transform each String from the result set in order; F.s will single quote strings, F.d will fix the dates.
 		// F.n just passes the String back
@@ -25,4 +23,3 @@ public class InsertOITLighthouseTables {
 	}
 
 }
-

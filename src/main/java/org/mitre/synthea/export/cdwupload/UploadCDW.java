@@ -21,10 +21,9 @@ public class UploadCDW {
 		
 		try {
 			dbProps.load(new FileInputStream(propFilePath));
+			baseDir = (String) dbProps.get("basedir");
 			AWS =Boolean.parseBoolean((String) dbProps.get("AWS"));
 			dbProps.getProperty("dbUrl");
-			baseDir = (String) dbProps.get("basedirsingle");
-			
 			if (AWS) {
 				dbUrl = (String) dbProps.get("awsdburl");
 				conProps.put("user", dbProps.get("awsuser"));
@@ -40,11 +39,10 @@ public class UploadCDW {
 			con = DriverManager.getConnection(dbUrl, conProps);
 			DeleteDimTables.delete(con);
 			InsertDimTables.load(con, baseDir, true);
-			System.out.println(dbUrl);
+			System.out.println(dbUrl);			
 			DeleteOtherTables.delete(con);
 			InsertOtherTables.load(con, baseDir, true);
-			
-			FixVuid.fix(con,AWS );
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,12 +56,12 @@ public class UploadCDW {
 				ex.printStackTrace();
 			}
 		}
-		
-		// load tables in the OIT_Lighthouse DB
+		// load tables in the OIT_Lightouse DB
 		conProps.put("database", dbProps.getProperty("oitlighthousedatabase"));
 		try {
 			con = DriverManager.getConnection(dbUrl, conProps);
 			LoadOITLighthouseTables.load(con, baseDir, true);
+			FixVuid.fix(con,AWS );
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -74,11 +72,10 @@ public class UploadCDW {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-		}	
+		}
 		long stoptime = System.currentTimeMillis();
 		System.out.println(" finished in " + (double) (stoptime -starttime)/(60.000 * 1000.0) + "min");
 	}
 }
-
 
 

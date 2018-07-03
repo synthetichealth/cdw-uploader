@@ -36,4 +36,3 @@ public class LoadDimTables {
 		TableBatch.load(dir+"vistapackage.csv", cn,"Dim.VistaPackage",batchMode,"(VistaPackageSID,VistaPackage)",F.s,F.s);	
 	}
 }
-

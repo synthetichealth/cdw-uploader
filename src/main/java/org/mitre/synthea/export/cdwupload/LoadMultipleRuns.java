@@ -1,5 +1,4 @@
 package org.mitre.synthea.export.cdwupload;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -7,8 +6,6 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 public class LoadMultipleRuns {
-	
-	
 	
 	public static void load( String parentDir, Boolean AWS ) {
 		
@@ -25,13 +22,11 @@ public class LoadMultipleRuns {
 	}
 	
 	public static void loadOITLightouse( String parentDir, Boolean AWS ) {
-		
 		File[] dirs = new File(parentDir).listFiles();
 		for (int i=0; i < dirs.length; i++) {
 			System.out.println(dirs[i]);
 			if (dirs[i].isDirectory()) {
 				System.out.println("***** loading " + dirs[i].toString());
-
 				UploadNoDeleteOITLighthouse.load(dirs[i].toString() //+ File.separator + "cdw" 
 			+ File.separator, AWS);
 			}
@@ -44,14 +39,11 @@ public class LoadMultipleRuns {
 		Boolean AWS = false;
 		Connection con = null;
 		long starttime = System.currentTimeMillis();
-
-		String baseDir = "";  
-		
+		String baseDir = "";  		
 		String dbUrl = "";
 		Properties conProps = new Properties();
 		try {
 			dbProps.load(new FileInputStream(propFilePath));
-			//dbProps.getProperty("dbUrl");
 			AWS =Boolean.parseBoolean((String) dbProps.get("AWS"));
 			baseDir = (String) dbProps.get("basedir");
 			System.out.println(AWS);
@@ -73,8 +65,6 @@ public class LoadMultipleRuns {
 			DeleteDimTables.delete(con);
 			DeleteOtherTables.delete(con);
 			LoadMultipleRuns.load(baseDir, AWS);
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -96,10 +86,7 @@ public class LoadMultipleRuns {
 				ex.printStackTrace();
 			}
 		}
-		
-		
 		long stoptime = System.currentTimeMillis();
 		System.out.println("\n finished LoadMultipleRuns in " + (double) (stoptime -starttime)/(60.000 * 1000.0) + "min");
-		
 	}
 }
