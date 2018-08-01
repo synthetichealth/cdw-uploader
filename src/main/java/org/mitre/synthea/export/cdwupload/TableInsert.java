@@ -3,12 +3,14 @@ package org.mitre.synthea.export.cdwupload;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class TableInsert {
 
-	public static void load(String fullPath, Connection con, String tableName, Boolean batchMode, String fieldList,
+	public static int load(String fullPath, Connection con, String tableName, Boolean batchMode, String fieldList,
+			HashMap<String,Integer> rowsLoadedPerTable,
 			Function<String, String>... fList) throws Exception {
 
 		String insertSql1 = "";
@@ -18,9 +20,10 @@ public class TableInsert {
 			ArrayList<ArrayList<String>> rowList = (ArrayList<ArrayList<String>>) CSVtoArrayList
 					.CSVToArrayList(fullPath);
 			stmt = con.createStatement();
-			System.out.print("loading " + tableName + " ");
+			//System.out.print("loading " + tableName + " ");
 
 			// skip the header row
+			// i indexes the row; j indexes the column for the current row
 			for (int i = 1, j = 0; i < rowList.size(); i++, j = 0) { // skip first row
 				ArrayList<String> row = rowList.get(i);
 				StringBuffer insertSql2 = new StringBuffer("insert into " + tableName + fieldList + " values (");
@@ -32,20 +35,22 @@ public class TableInsert {
 				}
 				insertSql2.append(" )");
 				String finalSql = insertSql2.toString();
+				loaded++;
 				try {
 					if (batchMode) {
 						stmt.addBatch(finalSql);
 					} else {
 						int resultCode2 = stmt.executeUpdate(finalSql);
 					}
-					loaded++;
+					//loaded++;
 				} catch (Exception ex) {
 					System.out.println(finalSql);
 					ex.printStackTrace();
 				}
-				if (i % 1000 == 0) {
-					System.out.print((i / 1000) + "k,");
-					if (i % 30000 == 0)
+				int printEveryN = 1000;
+				if (i % printEveryN == 0) {
+					//System.out.print( ((i / printEveryN)*10) + "k,");
+					if (i % (printEveryN * 20)  == 0)
 						System.out.println();
 
 					try {
@@ -62,7 +67,7 @@ public class TableInsert {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("  loaded " + loaded + " rows");
+			System.out.println("loaded " + loaded + " rows into " + tableName);
 			try {
 				if (batchMode) {
 					stmt.executeBatch();
@@ -72,5 +77,8 @@ public class TableInsert {
 				ex.printStackTrace();
 			}
 		}
+		Util.updateLoadedRecordCount(rowsLoadedPerTable ,  tableName, loaded);
+		
+		return(loaded);
 	}
 }
