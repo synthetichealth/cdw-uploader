@@ -23,6 +23,11 @@ cd cdw-uploader-master
 ./gradlew build check test
 ```
 
+You need to add the database connection information to the file db.properties, such as username, password, database url.
+Once configured, you can invoke the loader using the following command
+```
+java -cp "~:/Users/myname/Downloads/SQLServerDrivers/sqljdbc_6.4/enu/mssql-jdbc-6.4.0.jre8.jar" org.mitre.synthea.export.cdwupload.LoadMultipleRuns ~/db.properties
+```
 
 # License
 
