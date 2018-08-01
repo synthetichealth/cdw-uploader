@@ -12,10 +12,13 @@ You need to download the Microsoft JDBC drivers for SQlServer; they are at
     https://docs.microsoft.com/en-us/sql/connect/jdbc/using-the-jdbc-driver?view=sql-server-2017
 Building the project requires Java 1.8 or above.
 
+```
 git clone https://github.com/synthetichealth/cdw-uploader
-cd cdw-uploader-master
-./gradlew build check test
 
+cd cdw-uploader-master
+
+./gradlew build check test
+```
 
 
 # License
