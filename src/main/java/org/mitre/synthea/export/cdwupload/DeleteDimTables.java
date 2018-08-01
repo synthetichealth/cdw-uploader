@@ -21,6 +21,17 @@ public class DeleteDimTables {
 		TableDelete.delete( cn, " Dim.PharmacyOrderableItem "  , "" );
 		
 		TableDelete.delete( cn,"Dim.OrderableItem"  , "" );
+		
+		TableDelete.delete( cn,"Dim.CollectionSample"  , "" );
+		TableDelete.delete( cn,"Dim.Institution"  , "" );
+		TableDelete.delete( cn,"Dim.LabChemTest"  , "" );
+		TableDelete.delete( cn,"Dim.LOINC"  , "" );
+		TableDelete.delete( cn,"Dim.Topography"  , "" );
+		TableDelete.delete( cn,"Dim.VistaPackage"  , "" );
+		
+		TableDelete.delete( cn,"Dim.CPT"  , "" );
+		TableDelete.delete( cn,"Dim.VitalType"  , "" );
+		
 		cn.commit();
 	}
 }
