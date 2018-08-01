@@ -35,9 +35,18 @@ public class F {
 	// that allowed and return a function that takes a String and returns a String.   That lets us use the varargs list 
 	// of functions that all have the same signature; i.e. Function<String, String>
 	public static Function<Integer, Function<String, String>> quoteTrunc = curry(Util::singleQuoteStringAndTruncate);
+	
+	public static Function<Integer, Function<String, String>> quoteTruncNull = curry(Util::singleQuoteStringAndTruncateNull);
 
 	// write a wrapper around quoteTrunc to make it less verbose
 	public static Function<String, String> qt(int maxLength) {
 		return (quoteTrunc.apply(maxLength));
 	}
+	
+	public static Function<String, String> qtn(int maxLength) {
+		return (quoteTruncNull.apply(maxLength));
+	}
+	
+	public static Function<String, String> rnd = (String inStr) -> Util.roundToIntsingleQuoteStringOrNull(inStr);
+	
 }
