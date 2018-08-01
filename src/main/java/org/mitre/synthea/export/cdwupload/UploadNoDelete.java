@@ -3,11 +3,12 @@ package org.mitre.synthea.export.cdwupload;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.Properties;
 public class UploadNoDelete {
 	
-public static void load(String baseDir, Boolean AWS) {
-		String propFilePath = "/Users/garygryan/db.properties";
+public static void load(String baseDir, Boolean AWS, HashMap<String,Integer> rowsLoadedPerTable ) {
+		String propFilePath = Util.propFilePath;
 		Properties dbProps = new Properties();
 		Connection con = null;
 		long starttime = System.currentTimeMillis();
@@ -28,8 +29,8 @@ public static void load(String baseDir, Boolean AWS) {
 				conProps.put("database", dbProps.get("mitredatabase"));
 			}
 			con = DriverManager.getConnection(dbUrl, conProps);
-			InsertDimTables.load(con, baseDir, true);
-			InsertOtherTables.load(con, baseDir, true);
+			InsertDimTables.load(con, baseDir, true, rowsLoadedPerTable );
+			InsertOtherTables.load(con, baseDir, true, rowsLoadedPerTable );
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
