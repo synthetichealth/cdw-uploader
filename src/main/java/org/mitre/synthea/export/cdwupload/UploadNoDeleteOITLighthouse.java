@@ -3,12 +3,13 @@ package org.mitre.synthea.export.cdwupload;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class UploadNoDeleteOITLighthouse {
 	
-public static void load(String baseDir, Boolean AWS) {
-		String propFilePath = "/Users/garygryan/db.properties";
+public static void load(String baseDir, Boolean AWS, HashMap<String,Integer> rowsLoadedPerTable) {
+		String propFilePath = Util.propFilePath;
 		Properties dbProps = new Properties();
 		Connection con = null;
 		long starttime = System.currentTimeMillis();
@@ -28,9 +29,8 @@ public static void load(String baseDir, Boolean AWS) {
 				conProps.put("password", dbProps.get("mitrepassword"));
 				conProps.put("database", dbProps.get("oitlighthousedatabase"));
 			}
-			con = DriverManager.getConnection(dbUrl, conProps);	
-			TableDelete.delete(con, "App.Lookup_Patient", " where patientSID > 1 ");
-			InsertOITLighthouseTables.load(con, baseDir, true);
+			con = DriverManager.getConnection(dbUrl, conProps);			
+			InsertOITLighthouseTables.load(con, baseDir, true, rowsLoadedPerTable);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
