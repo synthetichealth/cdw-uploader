@@ -7,7 +7,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CSVtoArrayList {
-	//ArrayList<String> row = new ArrayList<String>();
+	
+	//return each line as a row
+	public static ArrayList<String> fileToArrayList(String fullPath) {
+		ArrayList<String> rows = new ArrayList<String>();
+
+		try ( BufferedReader br = new BufferedReader( new FileReader(fullPath))   ) {
+			String line;
+			while ( (line = br.readLine()) != null ) {
+				rows.add(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return( rows);
+	}
+	
 	
 	// make each row an ArrayList of String; return all the rows as an ArrayList of rows
 	public static ArrayList<ArrayList<String>> CSVToArrayList(String fullPath) {
