@@ -5,7 +5,18 @@ tables from the Veteran's Adminstration (VA) Corporate Data Warehouse (CDW).  Th
 Synthea as comma separated values (CSV) files with column headers.   
 
 The code uses a properties file (db.properties) to supply parameters for the database connection and
-location of input files.  
+location of input files; this can be passed in as a command-line parameter. (see sample script runLoad.sh).
+
+#### Installation
+You need to download the Microsoft JDBC drivers for SQlServer; they are at
+    https://docs.microsoft.com/en-us/sql/connect/jdbc/using-the-jdbc-driver?view=sql-server-2017
+Building the project requires Java 1.8 or above.
+
+git clone https://github.com/synthetichealth/cdw-uploader
+cd cdw-uploader-master
+./gradlew build check test
+
+
 
 # License
 
