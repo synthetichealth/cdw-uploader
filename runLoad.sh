@@ -1,0 +1,2 @@
+#!/bin/bash
+time java -cp "/Users/garygryan/eclipse-workspace/CDWUpload/build/libs/CDWUpload.jar:/Users/garygryan/Downloads/SQLServerDrivers/sqljdbc_6.4/enu/mssql-jdbc-6.4.0.jre8.jar" org.mitre.synthea.export.cdwupload.LoadMultipleRuns ~/db.properties 2>&1 | tee runusa5.log
