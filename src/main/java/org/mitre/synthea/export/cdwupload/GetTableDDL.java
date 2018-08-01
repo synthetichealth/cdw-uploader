@@ -13,6 +13,10 @@ import java.util.Properties;
 
 public class GetTableDDL {
 	
+	// this dumps information about the current database tables and their fields to
+	// a text file.   Running a "diff" on the text files from different days lets 
+	// you see if anything has changed.
+	
 	public static void main( String args[]) {
 		String propFilePath = Util.propFilePath;
 		Properties dbProps = new Properties();
@@ -29,19 +33,22 @@ public class GetTableDDL {
 			AWS =Boolean.parseBoolean((String) dbProps.get("AWS"));
 			baseDir = (String) dbProps.get("basedir");
 			outfilepath = (String) dbProps.get("outfilepath");
-			System.out.println(outfilepath);
+			System.out.println("outfilepath=" + outfilepath);
 			System.out.println(AWS);
 			if (AWS) {
 				dbUrl = (String) dbProps.get("awsdburl");
 				conProps.put("user", dbProps.get("awsuser"));
 				conProps.put("password", dbProps.get("awspassword"));
 				conProps.put("database", dbProps.get("awsdatabase"));
+				conProps.put("oitlighthousedatabase",dbProps.get("oitlighthousedatabase"));
 			}
 			else {
 				dbUrl = (String) dbProps.get("mitredburl");
 				conProps.put("user", dbProps.get("mitreuser"));
 				conProps.put("password", dbProps.get("mitrepassword"));
 				conProps.put("database", dbProps.get("mitredatabase"));
+				conProps.put("oitlighthousedatabase",dbProps.get("oitlighthousedatabase"));
+
 			}
 			System.out.println(conProps);
 			System.out.println(dbUrl);
@@ -79,15 +86,15 @@ public class GetTableDDL {
 					"  sys.extended_properties\n" + 
 					"WHERE \n" + 
 					"  name='MS_Description' AND minor_id>0 and class=1";
-			//tableDDLQuery = "sp_help OIT_Lighthouse.RXCN_CONSO";
 			tableDDLQuery = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS";
-			//tableDDLQuery = "select * from sys.tables where object_id = 565577053";
-			//tableDDLQuery = "sp_help [app.RXN_CONSO]";
-			//tableDDLQuery = "select OBJECT_DEFINITION(OBJECT_ID(565577053))";
 			BufferedWriter out = new BufferedWriter(new FileWriter(outfilepath +
 					 System.currentTimeMillis() + "_fieldList.csv" ));
-			runSql.runQuery(con, tableDDLQuery, out);
-			
+			RunSql.runQuery(con, tableDDLQuery, out, true);
+			con.close();
+			conProps.put("database", dbProps.get("oitlighthousedatabase"));
+			con = DriverManager.getConnection(dbUrl, conProps);
+			Thread.sleep(4000);
+			RunSql.runQuery(con, tableDDLQuery, out, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
