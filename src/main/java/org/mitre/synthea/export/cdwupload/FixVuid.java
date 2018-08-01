@@ -30,10 +30,9 @@ public class FixVuid {
 					"  AND A.[sab] = 'VANDF'\n" + 
 					"  AND D.[tty] in ('SCD','SBD','SCDG','SBDG','BPCK','GPCK', 'SCDF', 'SBDF');";
 		}
-		runSql.runUpdate(con, sql);
+		RunSql.runUpdate(con, sql);
 		System.out.println("executed " + sql);
 	}
 	
 
 }
-
