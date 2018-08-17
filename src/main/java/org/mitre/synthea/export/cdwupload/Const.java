@@ -6,12 +6,17 @@ import java.util.HashMap;
 
 public class Const {
 	
+	// the AWS database has two schemas: CDWWork which has the bulk of the tables
+	// OITLighthouse is the other schema
+	
+	// list of all the schema names in CDWWOrk
 	public static ArrayList<String> schemaListCDWWork = new ArrayList<String> (Arrays.asList( 
 			"Allergy", "Appt", "BCMA", "CPRSOrder", "Chem", "Con", "Dim", "Immun", "Inpat",
 			"MOCKUP", "Micro", "Mitre", "NonVAMed", "Outpat", "PatSub", "RxOut",
 			"SPatient", "SStaff", "Surg", "Vital"
 			));
 	
+	// list of all the table names with schema in 
 	public static ArrayList<String> tableListCDWWork = new ArrayList<String> (Arrays.asList(
 			"Allergy.AllergicReaction","Allergy.Allergy","Allergy.AllergyComment","Appt.Appointment","BCMA.BCMADispensedDrug",
 			"BCMA.BCMAMedicationLog","CPRSOrder.CPRSOrder","CPRSOrder.OrderedItem","Chem.LabChem","Chem.LabPanel",
